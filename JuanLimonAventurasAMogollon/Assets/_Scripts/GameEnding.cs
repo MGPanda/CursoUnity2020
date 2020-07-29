@@ -18,6 +18,10 @@ public class GameEnding : MonoBehaviour
 
     private float timer;
 
+    public AudioSource exitAudio, caughtAudio;
+
+    public bool hasAudioPlayed;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player)
@@ -30,16 +34,21 @@ public class GameEnding : MonoBehaviour
     {
         if (playerAtExit)
         {
-            EndLevel(exitBackgroundImageCanvasGroup, false);
+            EndLevel(exitBackgroundImageCanvasGroup, false, exitAudio);
         }
         else if (playerCaught)
         {
-            EndLevel(caughtBackgroundImageCanvasGroup, true);
+            EndLevel(caughtBackgroundImageCanvasGroup, true, caughtAudio);
         }
     }
 
-    void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart)
+    void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
     {
+        if (!hasAudioPlayed)
+        {
+            audioSource.Play();
+            hasAudioPlayed = true;
+        }
         timer += Time.deltaTime;
         imageCanvasGroup.alpha = Mathf.Clamp(timer / fadeDuration, 0, 1);
         if (timer > fadeDuration + displayImageDuration)
