@@ -61,11 +61,6 @@ public class TargetX : MonoBehaviour
     {
         Destroy(gameObject);
 
-        if (other.gameObject.CompareTag("Sensor") && !gameObject.CompareTag("Bad"))
-        {
-            gameManagerX.GameOver();
-        } 
-
     }
 
     // Display explosion particle at object's position
